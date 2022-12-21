@@ -64,8 +64,8 @@ def transform_input(input: str):
         if command == '$ cd ..':
             if depth == folder.depth:
                 folder.files = files
-            current_folder = dpath[-1]
-            dpath.remove(current_folder)
+
+            current_folder = dpath.pop()
             depth = len(dpath)
 
     folder.files = files
@@ -91,7 +91,6 @@ def get_parent(folders: list[Folder], linux_path):
 def main():
     terminal_log = load_input()
     folders = transform_input(terminal_log)
-    # original_folders = copy.deepcopy(folders)
     folders.sort(key=lambda x: x.depth, reverse=True)
     required_space = 30000000
     max_capacity = 70000000
@@ -110,13 +109,9 @@ def main():
     folders.sort(key=lambda y: y.get_disk_usage(), reverse=False)
 
     for folder in folders:
-        print(folder.get_disk_usage(), folder.linux_path)
-        print(folder.files)
-
-        print(len(folders))
-        # if current_state + folder.get_disk_usage() >= required_space:
-        #     print(folder.get_disk_usage())
-        #     break
+        if current_state + folder.get_disk_usage() >= required_space:
+            print(folder.get_disk_usage())
+            break
 
 
 if __name__ == '__main__':

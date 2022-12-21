@@ -63,8 +63,8 @@ def transform_input(input: str):
         if command == '$ cd ..':
             if depth == folder.depth:
                 folder.files = files
-            current_folder = dpath[-1]
-            dpath.remove(current_folder)
+
+            current_folder = dpath.pop()
             depth = len(dpath)
 
     folder.files = files
@@ -93,6 +93,7 @@ def main():
     folders.sort(key=lambda x: x.depth, reverse=True)
 
     for folder in folders:
+        print(folder.__dict__)
         files_usg = folder.get_disk_usage()
         parent = get_parent(
             folders, folder.linux_path[:-len(folder.name)])
