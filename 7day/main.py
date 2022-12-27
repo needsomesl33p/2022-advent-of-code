@@ -62,9 +62,6 @@ def transform_input(input: str):
         handle_content(command, files)
 
         if command == '$ cd ..':
-            if depth == folder.depth:
-                folder.files = files
-
             current_folder = dpath.pop()
             depth = len(dpath)
 
